@@ -53,13 +53,14 @@ expect <<EOF
 		sleep .1
 		exp_send -s -- \$arg
 	}
-	set timeout 60
+	set timeout 300
 
 	spawn pacstrap -C ./mkimage-arch-pacman.conf -c -d -G -i $ROOTFS base haveged --ignore $PKGIGNORE
 	expect {
 		-exact "anyway? \[Y/n\] " { send -- "n\r"; exp_continue }
 		-exact "(default=all): " { send -- "\r"; exp_continue }
 		-exact "installation? \[Y/n\]" { send -- "y\r"; exp_continue }
+		eof
 	}
 EOF
 
